@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
@@ -36,5 +38,12 @@ public class StudentServiceImpl implements StudentService {
         LOGGER.info("Buscar todos os students");
         Assert.notNull(pageable, "Página inválida");
         return this.studentRepository.findAll(pageable).map(student -> this.studentModelResponseMapper.map(student));
+    }
+
+    @Override
+    public Optional<StudentModelResponse> buscarPorID(Long id) {
+        LOGGER.info("Buscar registro do student por ID");
+        Assert.notNull(id, "ID inválido");
+        return this.studentRepository.findById(id).map(this.studentModelResponseMapper::map);
     }
 }
