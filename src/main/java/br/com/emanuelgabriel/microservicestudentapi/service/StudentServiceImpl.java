@@ -8,6 +8,8 @@ import br.com.emanuelgabriel.microservicestudentapi.service.mapper.Mapper;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -27,5 +29,12 @@ public class StudentServiceImpl implements StudentService {
         Assert.notNull(request, "Request inválida");
         Student student = this.requestStudentMapper.map(request);
         return this.studentRepository.saveAndFlush(student).map((Student input) -> this.studentModelResponseMapper.map(input));
+    }
+
+    @Override
+    public Page<StudentModelResponse> buscarTodos(Pageable pageable) {
+        LOGGER.info("Buscar todos os students");
+        Assert.notNull(pageable, "Página inválida");
+        return this.studentRepository.findAll(pageable).map(student -> this.studentModelResponseMapper.map(student));
     }
 }
