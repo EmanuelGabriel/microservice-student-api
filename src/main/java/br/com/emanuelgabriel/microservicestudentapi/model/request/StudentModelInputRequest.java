@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class StudentModelRequest {
+public class StudentModelInputRequest {
 
     private String name;
     private String email;
