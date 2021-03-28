@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.function.Function;
 
 @ToString
 @Getter
@@ -37,5 +38,15 @@ public class Student {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
+
+    /**
+     * Pegar um objeto de referência e mapear para um objeto do tipo 'Cliente'
+     * @param function
+     * @param <R>
+     * @return
+     */
+    public <R> R map(Function<Student, R> function){
+        return function.apply(this);
+    }
 
 }
